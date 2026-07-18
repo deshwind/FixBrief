@@ -1,0 +1,62 @@
+name: fixbrief
+description: AI-assisted repair intake and marketplace for customers and repair professionals.
+publish_to: none
+version: 0.1.0+1
+
+environment:
+  sdk: '>=3.12.0 <4.0.0'
+  flutter: '>=3.44.0'
+
+dependencies:
+  cached_network_image: ^3.4.1
+  collection: ^1.19.1
+  connectivity_plus: ^7.3.0
+  crypto: ^3.0.7
+  cupertino_icons: ^1.0.8
+  dio: ^5.10.0
+  drift: ^2.34.2
+  drift_flutter: ^0.3.1
+  file_picker: ^11.0.2
+  flutter:
+    sdk: flutter
+  flutter_animate: ^4.5.2
+  flutter_localizations:
+    sdk: flutter
+  flutter_riverpod: ^3.3.2
+  flutter_secure_storage: ^10.3.1
+  freezed_annotation: ^3.1.0
+  geocoding: ^5.0.0
+  geolocator: ^14.0.2
+  go_router: ^17.3.0
+  image_picker: ^1.2.3
+  intl: ^0.20.2
+  json_annotation: ^4.12.0
+  mime: ^2.0.0
+  path: ^1.9.1
+  path_provider: ^2.1.6
+  permission_handler: ^12.0.3
+  record: ^7.1.1
+  riverpod_annotation: ^4.0.3
+  speech_to_text: ^7.4.0
+  supabase_flutter: ^2.16.0
+  uuid: ^4.6.0
+
+dev_dependencies:
+  # 2.13.1 is the latest release supporting analyzer 12, shared by generators.
+  build_runner: 2.13.1
+  # 2.34.1+ requires analyzer 13, while Riverpod 4.0.4 uses analyzer 12.
+  drift_dev: 2.34.0
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+  freezed: ^3.2.5
+  integration_test:
+    sdk: flutter
+  json_serializable: ^6.14.0
+  mocktail: ^1.0.5
+  riverpod_generator: ^4.0.4
+  riverpod_lint: ^3.1.4
+
+flutter:
+  uses-material-design: true
+  generate: true

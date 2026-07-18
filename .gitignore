@@ -1,0 +1,49 @@
+# Flutter and Dart tooling
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+doc/api/
+
+# Generated code is reproducible in CI.
+*.freezed.dart
+*.g.dart
+
+# Local IDE and operating-system files
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Android and iOS build products/signing material
+android/.gradle/
+android/local.properties
+android/key.properties
+android/app/*.jks
+android/app/*.keystore
+ios/Flutter/ephemeral/
+ios/Pods/
+ios/.symlinks/
+ios/Runner.xcworkspace/xcuserdata/
+
+# Environment files. The checked-in example contains no usable credentials.
+config/env.*.json
+!config/env.example.json
+.env
+.env.*
+
+# Supabase local development artifacts and function-local secrets
+supabase/.branches/
+supabase/.temp/
+supabase/functions/node_modules/
+supabase/functions/.env
+supabase/functions/.env.*
+
+# Logs and local databases
+*.log
+*.sqlite
+*.sqlite3
