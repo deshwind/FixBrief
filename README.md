@@ -10,7 +10,7 @@ the customer with suitable repair professionals for provisional quotes.
 
 ## Current delivery status
 
-Stages 1–8 are complete. The workspace contains the Flutter architecture,
+Stages 1–11 of the 12-stage plan are complete. The workspace contains the Flutter architecture,
 Liquid Glass design system, customer and repairer prototypes, Supabase client
 bootstrap, email/password authentication, password recovery, email
 verification, role selection, role-specific onboarding, protected routes, the
@@ -21,8 +21,17 @@ safety rules, targeted follow-up questions, repair-brief editing and
 customer-controlled publishing, explainable marketplace matching, a live
 repairer dashboard, request search and filters, privacy-safe request details,
 verified repairer profiles, provisional quote creation/editing/withdrawal,
-server-calculated ranges, expiry, explained quote comparison, and atomic
-customer acceptance.
+server-calculated ranges, expiry, explained quote comparison, atomic customer
+acceptance, participant-only realtime conversations, text and private
+attachments, read and typing states, secure appointment negotiation,
+customer-controlled address release, blocking, and reporting. It also includes
+participant-only job lists, status timelines and history, role-constrained
+progress updates, customer completion confirmation, reciprocal completed-job
+reviews, and repairer review responses. Stage 11 adds an in-app notification
+inbox with deep links, persistent theme/effect/accessibility controls,
+notification preferences, Profile and Settings destinations, blocked-user
+management, support/legal screens, data-export requests, and recoverable
+account deletion scheduling.
 
 Detailed handoffs:
 
@@ -34,9 +43,12 @@ Detailed handoffs:
 - [`docs/stage-6-ai-assessment.md`](docs/stage-6-ai-assessment.md)
 - [`docs/stage-7-repairer-marketplace.md`](docs/stage-7-repairer-marketplace.md)
 - [`docs/stage-8-quotes.md`](docs/stage-8-quotes.md)
+- [`docs/stage-9-messaging-appointments.md`](docs/stage-9-messaging-appointments.md)
+- [`docs/stage-10-jobs-reviews.md`](docs/stage-10-jobs-reviews.md)
+- [`docs/stage-11-notifications-settings.md`](docs/stage-11-notifications-settings.md)
 
-Stage 9 messaging and appointments have not started. Local migration/pgTAP execution still
-requires Docker Desktop on this workstation.
+Local migration/pgTAP execution still requires Docker Desktop on this
+workstation. Stage 12 testing and deployment remains.
 
 ## Quick start: local demo
 
@@ -49,13 +61,17 @@ flutter run -d emulator-5554 `
   --dart-define=APP_ENV=development `
   --dart-define=AUTH_DEMO_MODE=true `
   --dart-define=SUPABASE_URL=https://example.supabase.co `
-  --dart-define=SUPABASE_ANON_KEY=stage-8-demo
+  --dart-define=SUPABASE_ANON_KEY=stage-11-demo
 ```
 
 Demo mode keeps account identity data in memory, persists unfinished repair
 drafts locally, simulates request submission, and runs the full deterministic
 assessment/follow-up/publish journey, a deterministic repairer marketplace,
-and both sides of the provisional quote workflow.
+both sides of the provisional quote workflow, realtime-style messaging, private
+attachment metadata, appointments, blocking, and reporting. It also includes
+both roles' job timelines, progress updates, completion, reciprocal reviews,
+role-aware notifications, settings, accessibility preferences, privacy
+requests, and blocked-user controls.
 It is rejected automatically when `APP_ENV=production`.
 
 ## Quick start: Supabase

@@ -26,6 +26,21 @@ abstract final class AppPaths {
   static const repairerProfile = '/repairers/:repairerId';
   static const aiAssessment = '/customer/requests/:requestId/assessment';
   static const customerQuoteComparison = '/customer/requests/:requestId/quotes';
+  static const customerJobs = '/customer/jobs';
+  static const customerJob = '/customer/jobs/:jobId';
+  static const customerJobReview = '/customer/jobs/:jobId/review';
+  static const repairerJobs = '/repairer/jobs';
+  static const repairerJob = '/repairer/jobs/:jobId';
+  static const repairerJobReview = '/repairer/jobs/:jobId/review';
+  static const conversations = '/messages';
+  static const conversation = '/messages/:conversationId';
+  static const notifications = '/notifications';
+  static const profile = '/profile';
+  static const settings = '/settings';
+  static const blockedUsers = '/settings/blocked-users';
+  static const helpSupport = '/help';
+  static const privacyPolicy = '/legal/privacy';
+  static const terms = '/legal/terms';
 
   static String aiAssessmentFor(String requestId) =>
       '/customer/requests/$requestId/assessment';
@@ -41,6 +56,19 @@ abstract final class AppPaths {
 
   static String repairerProfileFor(String repairerId) =>
       '/repairers/$repairerId';
+
+  static String conversationFor(String conversationId) =>
+      '/messages/$conversationId';
+
+  static String customerJobFor(String jobId) => '/customer/jobs/$jobId';
+
+  static String customerJobReviewFor(String jobId) =>
+      '/customer/jobs/$jobId/review';
+
+  static String repairerJobFor(String jobId) => '/repairer/jobs/$jobId';
+
+  static String repairerJobReviewFor(String jobId) =>
+      '/repairer/jobs/$jobId/review';
 
   static String repairRequestStep(int index) => switch (index) {
     0 => repairRequestCategory,

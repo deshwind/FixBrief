@@ -9,6 +9,7 @@ import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_navigation_bar.d
 import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_preview_settings.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_status_pill.dart';
 import 'package:fixbrief/features/authentication/presentation/widgets/account_menu_button.dart';
+import 'package:fixbrief/features/notifications/presentation/widgets/notification_bell.dart';
 import 'package:fixbrief/features/repair_requests/domain/entities/repair_request_draft.dart';
 import 'package:fixbrief/features/repair_requests/presentation/providers/repair_request_providers.dart';
 import 'package:flutter/material.dart';
@@ -205,15 +206,12 @@ class CustomerHomeScreen extends ConsumerWidget {
                 child: LiquidGlassNavigationBar(
                   selectedIndex: 0,
                   onDestinationSelected: (index) {
-                    if (index == 1 && quoteRequestId != null) {
-                      context.go(
-                        AppPaths.customerQuoteComparisonFor(quoteRequestId),
-                      );
+                    if (index == 1) {
+                      context.go(AppPaths.customerJobs);
+                    } else if (index == 2) {
+                      context.go(AppPaths.conversations);
                     } else if (index != 0) {
-                      _showStageMessage(
-                        context,
-                        'This Stage 2 prototype demonstrates the customer Home destination.',
-                      );
+                      context.go(AppPaths.profile);
                     }
                   },
                   destinations: const [
@@ -292,6 +290,8 @@ class _HomeHeader extends StatelessWidget {
           onPressed: onAssessmentTap,
         ),
         const SizedBox(width: 8),
+        const NotificationBell(),
+        const SizedBox(width: 4),
         const AccountMenuButton(),
         const SizedBox(width: 8),
         const LiquidGlassPreviewSettingsButton(),

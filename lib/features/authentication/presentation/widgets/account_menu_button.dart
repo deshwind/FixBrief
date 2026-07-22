@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:fixbrief/core/routing/app_paths.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_container.dart';
 import 'package:fixbrief/features/authentication/presentation/providers/authentication_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class AccountMenuButton extends ConsumerWidget {
   const AccountMenuButton({super.key});
@@ -20,8 +22,19 @@ class AccountMenuButton extends ConsumerWidget {
           tooltip: 'Account menu',
           icon: const Icon(Icons.account_circle_outlined),
           onSelected: (action) {
-            if (action == _AccountAction.signOut) {
-              unawaited(_signOut(context, ref));
+            switch (action) {
+              case _AccountAction.profile:
+                unawaited(context.push(AppPaths.profile));
+                return;
+              case _AccountAction.notifications:
+                unawaited(context.push(AppPaths.notifications));
+                return;
+              case _AccountAction.settings:
+                unawaited(context.push(AppPaths.settings));
+                return;
+              case _AccountAction.signOut:
+                unawaited(_signOut(context, ref));
+                return;
             }
           },
           itemBuilder: (context) => [
@@ -30,6 +43,30 @@ class AccountMenuButton extends ConsumerWidget {
                 enabled: false,
                 child: Text(email, overflow: TextOverflow.ellipsis),
               ),
+            const PopupMenuItem<_AccountAction>(
+              value: _AccountAction.profile,
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Icon(Icons.person_outline_rounded),
+                title: Text('Profile'),
+              ),
+            ),
+            const PopupMenuItem<_AccountAction>(
+              value: _AccountAction.notifications,
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Icon(Icons.notifications_outlined),
+                title: Text('Notifications'),
+              ),
+            ),
+            const PopupMenuItem<_AccountAction>(
+              value: _AccountAction.settings,
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: Icon(Icons.settings_outlined),
+                title: Text('Settings'),
+              ),
+            ),
             const PopupMenuItem<_AccountAction>(
               value: _AccountAction.signOut,
               child: ListTile(
@@ -58,4 +95,4 @@ class AccountMenuButton extends ConsumerWidget {
   }
 }
 
-enum _AccountAction { signOut }
+enum _AccountAction { profile, notifications, settings, signOut }

@@ -12,6 +12,13 @@ import 'package:fixbrief/features/authentication/presentation/screens/reset_pass
 import 'package:fixbrief/features/authentication/presentation/screens/splash_screen.dart';
 import 'package:fixbrief/features/authentication/presentation/screens/welcome_screen.dart';
 import 'package:fixbrief/features/customer_home/presentation/screens/customer_home_screen.dart';
+import 'package:fixbrief/features/jobs/presentation/screens/job_detail_screen.dart';
+import 'package:fixbrief/features/jobs/presentation/screens/jobs_screen.dart';
+import 'package:fixbrief/features/jobs/presentation/screens/review_submission_screen.dart';
+import 'package:fixbrief/features/messaging/domain/entities/messaging_models.dart';
+import 'package:fixbrief/features/messaging/presentation/screens/conversation_screen.dart';
+import 'package:fixbrief/features/messaging/presentation/screens/conversations_screen.dart';
+import 'package:fixbrief/features/notifications/presentation/screens/notifications_screen.dart';
 import 'package:fixbrief/features/onboarding/presentation/screens/customer_onboarding_screen.dart';
 import 'package:fixbrief/features/onboarding/presentation/screens/repairer_onboarding_screen.dart';
 import 'package:fixbrief/features/onboarding/presentation/screens/role_selection_screen.dart';
@@ -24,6 +31,11 @@ import 'package:fixbrief/features/repairer_dashboard/presentation/screens/repair
 import 'package:fixbrief/features/repairer_marketplace/presentation/screens/marketplace_request_detail_screen.dart';
 import 'package:fixbrief/features/repairer_marketplace/presentation/screens/matching_requests_screen.dart';
 import 'package:fixbrief/features/repairer_marketplace/presentation/screens/repairer_profile_screen.dart';
+import 'package:fixbrief/features/settings/presentation/screens/blocked_users_screen.dart';
+import 'package:fixbrief/features/settings/presentation/screens/help_support_screen.dart';
+import 'package:fixbrief/features/settings/presentation/screens/legal_document_screen.dart';
+import 'package:fixbrief/features/settings/presentation/screens/profile_screen.dart';
+import 'package:fixbrief/features/settings/presentation/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -95,6 +107,50 @@ GoRouter buildAppRouter(WidgetRef ref, AuthRouterRefresh refresh) {
       _route(AppPaths.repairerDashboard, const RepairerDashboardScreen()),
       _route(AppPaths.repairerRequests, const MatchingRequestsScreen()),
       _route(AppPaths.repairerQuotes, const RepairerQuotesScreen()),
+      _route(AppPaths.customerJobs, const JobsScreen()),
+      _route(AppPaths.repairerJobs, const JobsScreen()),
+      _route(AppPaths.conversations, const ConversationsScreen()),
+      _route(AppPaths.notifications, const NotificationsScreen()),
+      _route(AppPaths.profile, const ProfileScreen()),
+      _route(AppPaths.settings, const SettingsScreen()),
+      _route(AppPaths.blockedUsers, const BlockedUsersScreen()),
+      _route(AppPaths.helpSupport, const HelpSupportScreen()),
+      _route(
+        AppPaths.privacyPolicy,
+        const LegalDocumentScreen(document: LegalDocument.privacy),
+      ),
+      _route(
+        AppPaths.terms,
+        const LegalDocumentScreen(document: LegalDocument.terms),
+      ),
+      GoRoute(
+        path: AppPaths.customerJobReview,
+        pageBuilder: (context, state) => _liquidPage(
+          state: state,
+          child: ReviewSubmissionScreen(jobId: state.pathParameters['jobId']!),
+        ),
+      ),
+      GoRoute(
+        path: AppPaths.repairerJobReview,
+        pageBuilder: (context, state) => _liquidPage(
+          state: state,
+          child: ReviewSubmissionScreen(jobId: state.pathParameters['jobId']!),
+        ),
+      ),
+      GoRoute(
+        path: AppPaths.customerJob,
+        pageBuilder: (context, state) => _liquidPage(
+          state: state,
+          child: JobDetailScreen(jobId: state.pathParameters['jobId']!),
+        ),
+      ),
+      GoRoute(
+        path: AppPaths.repairerJob,
+        pageBuilder: (context, state) => _liquidPage(
+          state: state,
+          child: JobDetailScreen(jobId: state.pathParameters['jobId']!),
+        ),
+      ),
       GoRoute(
         path: AppPaths.repairerRequest,
         pageBuilder: (context, state) => _liquidPage(
@@ -137,6 +193,18 @@ GoRouter buildAppRouter(WidgetRef ref, AuthRouterRefresh refresh) {
           state: state,
           child: QuoteComparisonScreen(
             requestId: state.pathParameters['requestId']!,
+          ),
+        ),
+      ),
+      GoRoute(
+        path: AppPaths.conversation,
+        pageBuilder: (context, state) => _liquidPage(
+          state: state,
+          child: ConversationScreen(
+            conversationId: state.pathParameters['conversationId']!,
+            initialConversation: state.extra is ConversationSummary
+                ? state.extra! as ConversationSummary
+                : null,
           ),
         ),
       ),

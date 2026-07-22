@@ -25,13 +25,13 @@ class RepairerMarketplaceNavigation extends StatelessWidget {
                 context.go(AppPaths.repairerRequests);
                 return;
               case 2:
-                context.go(AppPaths.repairerQuotes);
+                context.go(AppPaths.repairerJobs);
                 return;
               case 3:
-                _showLater(context, 'Customer messaging arrives in Stage 9.');
+                context.go(AppPaths.conversations);
                 return;
               case 4:
-                context.go(AppPaths.repairerProfileFor('me'));
+                context.go(AppPaths.profile);
                 return;
             }
           },
@@ -46,9 +46,9 @@ class RepairerMarketplaceNavigation extends StatelessWidget {
               label: 'Requests',
             ),
             LiquidGlassNavigationDestination(
-              icon: Icons.request_quote_outlined,
-              selectedIcon: Icons.request_quote_rounded,
-              label: 'Quotes',
+              icon: Icons.handyman_outlined,
+              selectedIcon: Icons.handyman_rounded,
+              label: 'Jobs',
             ),
             LiquidGlassNavigationDestination(
               icon: Icons.chat_bubble_outline_rounded,
@@ -64,11 +64,5 @@ class RepairerMarketplaceNavigation extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  static void _showLater(BuildContext context, String message) {
-    ScaffoldMessenger.of(context)
-      ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(message)));
   }
 }

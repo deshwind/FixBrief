@@ -3,6 +3,7 @@ import 'package:fixbrief/core/theme/app_theme_mode.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_bottom_sheet.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_chip.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_container.dart';
+import 'package:fixbrief/features/settings/presentation/providers/settings_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -76,7 +77,9 @@ class _PreviewSettingsSheet extends ConsumerWidget {
             ],
             selected: {themeMode},
             onSelectionChanged: (selection) {
-              ref.read(appThemeModeProvider.notifier).setMode(selection.first);
+              ref
+                  .read(settingsControllerProvider.notifier)
+                  .setThemeMode(selection.first);
             },
           ),
           const SizedBox(height: 24),
@@ -104,8 +107,8 @@ class _PreviewSettingsSheet extends ConsumerWidget {
                   selected: effects.mode == mode,
                   onSelected: (_) {
                     ref
-                        .read(accessibilityEffectsControllerProvider.notifier)
-                        .setMode(mode);
+                        .read(settingsControllerProvider.notifier)
+                        .setEffectMode(mode);
                   },
                 ),
             ],
@@ -117,7 +120,7 @@ class _PreviewSettingsSheet extends ConsumerWidget {
             subtitle: const Text('Replaces blur with an opaque surface.'),
             value: effects.reduceTransparency,
             onChanged: ref
-                .read(accessibilityEffectsControllerProvider.notifier)
+                .read(settingsControllerProvider.notifier)
                 .setReduceTransparency,
           ),
           SwitchListTile.adaptive(
@@ -126,7 +129,7 @@ class _PreviewSettingsSheet extends ConsumerWidget {
             subtitle: const Text('Stops decorative and reveal animations.'),
             value: effects.reduceMotion,
             onChanged: ref
-                .read(accessibilityEffectsControllerProvider.notifier)
+                .read(settingsControllerProvider.notifier)
                 .setReduceMotion,
           ),
         ],

@@ -8,6 +8,7 @@ import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_card.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_preview_settings.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_status_pill.dart';
 import 'package:fixbrief/features/authentication/presentation/widgets/account_menu_button.dart';
+import 'package:fixbrief/features/notifications/presentation/widgets/notification_bell.dart';
 import 'package:fixbrief/features/repairer_marketplace/domain/entities/marketplace_models.dart';
 import 'package:fixbrief/features/repairer_marketplace/presentation/controllers/repairer_marketplace_state.dart';
 import 'package:fixbrief/features/repairer_marketplace/presentation/providers/repairer_marketplace_providers.dart';
@@ -258,6 +259,8 @@ class _DashboardHeader extends StatelessWidget {
             ],
           ),
         ),
+        const NotificationBell(),
+        const SizedBox(width: 4),
         const AccountMenuButton(),
         const SizedBox(width: 8),
         const LiquidGlassPreviewSettingsButton(),
@@ -403,12 +406,14 @@ class _WorkSnapshot extends StatelessWidget {
             icon: Icons.request_quote_outlined,
             label: 'Quotes awaiting response',
             value: '${dashboard.submittedQuoteCount}',
+            onTap: () => context.go(AppPaths.repairerQuotes),
           ),
           const SizedBox(height: 14),
           _SummaryRow(
             icon: Icons.handyman_outlined,
             label: 'Active jobs',
             value: '${dashboard.activeJobCount}',
+            onTap: () => context.go(AppPaths.repairerJobs),
           ),
           const SizedBox(height: 14),
           _SummaryRow(
@@ -481,21 +486,36 @@ class _SummaryRow extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.value,
+    this.onTap,
   });
 
   final IconData icon;
   final String label;
   final String value;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, size: 20, color: LiquidGlassColors.industrial),
-        const SizedBox(width: 10),
-        Expanded(child: Text(label)),
-        Text(value, style: Theme.of(context).textTheme.titleSmall),
-      ],
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(10),
+      child: Padding(
+        padding: onTap == null
+            ? EdgeInsets.zero
+            : const EdgeInsets.symmetric(vertical: 6),
+        child: Row(
+          children: [
+            Icon(icon, size: 20, color: LiquidGlassColors.industrial),
+            const SizedBox(width: 10),
+            Expanded(child: Text(label)),
+            Text(value, style: Theme.of(context).textTheme.titleSmall),
+            if (onTap != null) ...[
+              const SizedBox(width: 4),
+              const Icon(Icons.chevron_right_rounded, size: 20),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }
