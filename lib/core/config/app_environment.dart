@@ -27,13 +27,18 @@ class AppEnvironment {
       defaultValue: 'development',
     );
     const supabaseUrl = String.fromEnvironment('SUPABASE_URL');
-    const supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
+    const supabasePublishableKey = String.fromEnvironment(
+      'SUPABASE_PUBLISHABLE_KEY',
+    );
+    const legacySupabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
     const useDemoAuthentication = bool.fromEnvironment('AUTH_DEMO_MODE');
 
     return AppEnvironment(
       flavor: AppFlavor.parse(flavor),
       supabaseUrl: supabaseUrl,
-      supabaseAnonKey: supabaseAnonKey,
+      supabaseAnonKey: supabasePublishableKey.isNotEmpty
+          ? supabasePublishableKey
+          : legacySupabaseAnonKey,
       useDemoAuthentication: useDemoAuthentication,
     );
   }
@@ -63,10 +68,21 @@ class AppEnvironment {
       );
     }
 
-    if (supabaseAnonKey.trim().isEmpty || supabaseAnonKey.startsWith('your-')) {
+    final normalizedKey = supabaseAnonKey.trim();
+    if (normalizedKey.isEmpty ||
+        normalizedKey.startsWith('your-') ||
+        normalizedKey == 'replace-with-client-safe-publishable-key') {
       throw const FormatException(
-        'SUPABASE_ANON_KEY is missing. Pass client configuration with '
-        '--dart-define-from-file.',
+        'SUPABASE_PUBLISHABLE_KEY is missing. Pass client configuration '
+        'with --dart-define-from-file.',
+      );
+    }
+
+    if (isProduction &&
+        (uri.host == 'example.supabase.co' ||
+            uri.host == 'your-project-ref.supabase.co')) {
+      throw const FormatException(
+        'Production cannot use a placeholder Supabase project.',
       );
     }
   }

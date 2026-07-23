@@ -229,7 +229,8 @@ class _NotificationSettingsCard extends StatelessWidget {
         children: [
           _PreferenceSwitch(
             title: 'Push notifications',
-            subtitle: 'Prepared for device push delivery in Stage 12.',
+            subtitle:
+                'Controls device alerts when production push delivery is enabled.',
             value: preferences.pushEnabled,
             enabled: enabled,
             onChanged: (value) =>

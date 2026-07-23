@@ -83,7 +83,7 @@ class HelpSupportScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   const Text(
-                    'For this MVP, email support@fixbrief.example. Production support channels are configured during Stage 12.',
+                    'For this test build, email support@fixbrief.example. Replace this with the approved production support contact before publication.',
                   ),
                   const SizedBox(height: 12),
                   OutlinedButton.icon(

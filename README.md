@@ -10,7 +10,7 @@ the customer with suitable repair professionals for provisional quotes.
 
 ## Current delivery status
 
-Stages 1–11 of the 12-stage plan are complete. The workspace contains the Flutter architecture,
+All 12 implementation stages are complete. The workspace contains the Flutter architecture,
 Liquid Glass design system, customer and repairer prototypes, Supabase client
 bootstrap, email/password authentication, password recovery, email
 verification, role selection, role-specific onboarding, protected routes, the
@@ -32,6 +32,10 @@ inbox with deep links, persistent theme/effect/accessibility controls,
 notification preferences, Profile and Settings destinations, blocked-user
 management, support/legal screens, data-export requests, and recoverable
 account deletion scheduling.
+Stage 12 adds production environment validation, immutable-role regression
+coverage, external-service mocks, a device integration journey, CI quality and
+Supabase gates, Android release signing, an iOS privacy manifest, and complete
+release/privacy/store runbooks.
 
 Detailed handoffs:
 
@@ -46,9 +50,12 @@ Detailed handoffs:
 - [`docs/stage-9-messaging-appointments.md`](docs/stage-9-messaging-appointments.md)
 - [`docs/stage-10-jobs-reviews.md`](docs/stage-10-jobs-reviews.md)
 - [`docs/stage-11-notifications-settings.md`](docs/stage-11-notifications-settings.md)
+- [`docs/stage-12-testing-deployment.md`](docs/stage-12-testing-deployment.md)
 
 Local migration/pgTAP execution still requires Docker Desktop on this
-workstation. Stage 12 testing and deployment remains.
+workstation. Public release remains intentionally blocked until production
+infrastructure, legal approval, private signing credentials, and the applicable
+items in [`docs/release/checklists.md`](docs/release/checklists.md) are complete.
 
 ## Quick start: local demo
 
@@ -61,7 +68,7 @@ flutter run -d emulator-5554 `
   --dart-define=APP_ENV=development `
   --dart-define=AUTH_DEMO_MODE=true `
   --dart-define=SUPABASE_URL=https://example.supabase.co `
-  --dart-define=SUPABASE_ANON_KEY=stage-11-demo
+  --dart-define=SUPABASE_PUBLISHABLE_KEY=stage-12-demo
 ```
 
 Demo mode keeps account identity data in memory, persists unfinished repair

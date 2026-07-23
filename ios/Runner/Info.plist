@@ -18,7 +18,7 @@
 		</dict>
 	</array>
 	<key>CFBundleDisplayName</key>
-	<string>Fixbrief</string>
+	<string>FixBrief</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -37,6 +37,10 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Select profile images and private repair evidence for your FixBrief account.</string>
 	<key>NSMicrophoneUsageDescription</key>

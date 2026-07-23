@@ -1,0 +1,74 @@
+name: Quality gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  flutter:
+    name: Flutter tests and debug build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.44.6
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+      - run: dart format --output=none --set-exit-if-changed lib test integration_test tool
+      - run: flutter analyze
+      - run: flutter test --coverage
+      - name: Build development APK
+        run: >-
+          flutter build apk --debug
+          --dart-define=APP_ENV=development
+          --dart-define=AUTH_DEMO_MODE=true
+          --dart-define=SUPABASE_URL=https://example.supabase.co
+          --dart-define=SUPABASE_PUBLISHABLE_KEY=stage-12-ci
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fixbrief-debug-apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
+          if-no-files-found: error
+
+  android-integration:
+    name: Android integration journey
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.44.6
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+      - uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 35
+          arch: x86_64
+          disable-animations: true
+          script: flutter test integration_test/customer_release_journey_test.dart -d emulator-5554
+
+  supabase:
+    name: Supabase migrations, pgTAP, and lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npx --yes supabase@latest start
+      - run: npx --yes supabase@latest db reset --local
+      - run: npx --yes supabase@latest test db
+      - run: npx --yes supabase@latest db lint --local --level warning --fail-on error
+      - if: always()
+        run: npx --yes supabase@latest stop --no-backup

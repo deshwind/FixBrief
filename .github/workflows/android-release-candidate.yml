@@ -1,0 +1,59 @@
+name: Android release candidate
+
+on:
+  workflow_dispatch:
+    inputs:
+      build_name:
+        description: Public version, for example 1.0.0
+        required: true
+        type: string
+      build_number:
+        description: Monotonically increasing Play build number
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  app-bundle:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.44.6
+          channel: stable
+          cache: true
+      - name: Restore production client configuration
+        shell: bash
+        run: >-
+          printf '%s' '${{ secrets.PRODUCTION_ENV_JSON_BASE64 }}'
+          | base64 --decode
+          > config/env.production.json
+      - name: Restore Android upload keystore
+        shell: bash
+        run: >-
+          printf '%s' '${{ secrets.ANDROID_UPLOAD_KEYSTORE_BASE64 }}'
+          | base64 --decode
+          > "$RUNNER_TEMP/fixbrief-upload.jks"
+      - run: flutter pub get
+      - run: dart run build_runner build --delete-conflicting-outputs
+      - run: dart run tool/validate_environment.dart config/env.production.json
+      - name: Build signed app bundle
+        env:
+          FIXBRIEF_KEYSTORE_PATH: ${{ runner.temp }}/fixbrief-upload.jks
+          FIXBRIEF_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          FIXBRIEF_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          FIXBRIEF_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: >-
+          flutter build appbundle --release
+          --build-name=${{ inputs.build_name }}
+          --build-number=${{ inputs.build_number }}
+          --dart-define-from-file=config/env.production.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fixbrief-${{ inputs.build_name }}-${{ inputs.build_number }}.aab
+          path: build/app/outputs/bundle/release/app-release.aab
+          if-no-files-found: error

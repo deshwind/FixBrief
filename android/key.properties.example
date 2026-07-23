@@ -1,0 +1,6 @@
+# Copy this file to android/key.properties and replace every value.
+# android/key.properties is ignored by Git.
+storeFile=C:\\secure\\path\\fixbrief-upload-keystore.jks
+storePassword=replace-with-keystore-password
+keyAlias=upload
+keyPassword=replace-with-key-password

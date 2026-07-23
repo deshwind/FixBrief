@@ -17,6 +17,16 @@ class DemoOnboardingRepository implements OnboardingRepository {
     required UserRole role,
   }) async {
     _ensureCurrentUser(userId);
+    final currentRole = _store.progress.role;
+    if (currentRole != null) {
+      if (currentRole != role) {
+        throw const OnboardingFailure(
+          'Your account type is already set and cannot be changed in the app.',
+          code: 'role_immutable',
+        );
+      }
+      return _store.progress;
+    }
     _store.selectRole(role);
     return _store.progress;
   }
