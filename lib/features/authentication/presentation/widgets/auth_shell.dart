@@ -1,5 +1,6 @@
 import 'package:fixbrief/core/routing/app_paths.dart';
 import 'package:fixbrief/core/theme/liquid_glass_colors.dart';
+import 'package:fixbrief/core/widgets/fixbrief_logo.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/fluid_background.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_container.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_preview_settings.dart';
@@ -116,17 +117,7 @@ class _BrandMark extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          width: 48,
-          height: 48,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(17),
-            gradient: const LinearGradient(
-              colors: [LiquidGlassColors.coolBlue, LiquidGlassColors.cyan],
-            ),
-          ),
-          child: const Icon(Icons.link_rounded, color: Colors.white),
-        ),
+        const FixBriefLogo(),
         const SizedBox(width: 12),
         Text('FixBrief', style: Theme.of(context).textTheme.titleLarge),
       ],

@@ -1,6 +1,7 @@
 import 'package:fixbrief/core/config/app_environment_provider.dart';
 import 'package:fixbrief/core/routing/app_paths.dart';
 import 'package:fixbrief/core/theme/liquid_glass_colors.dart';
+import 'package:fixbrief/core/widgets/fixbrief_logo.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/fluid_background.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_button.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/liquid_glass_card.dart';
@@ -276,7 +277,7 @@ class _HomeHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        const _FixBriefMark(),
+        const FixBriefLogo(),
         const SizedBox(width: 12),
         Expanded(
           child: Text(
@@ -296,30 +297,6 @@ class _HomeHeader extends StatelessWidget {
         const SizedBox(width: 8),
         const LiquidGlassPreviewSettingsButton(),
       ],
-    );
-  }
-}
-
-class _FixBriefMark extends StatelessWidget {
-  const _FixBriefMark();
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      label: 'FixBrief repair link symbol',
-      child: Container(
-        width: 48,
-        height: 48,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(17),
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [LiquidGlassColors.coolBlue, LiquidGlassColors.cyan],
-          ),
-        ),
-        child: const Icon(Icons.link_rounded, color: Colors.white),
-      ),
     );
   }
 }

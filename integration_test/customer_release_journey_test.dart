@@ -72,16 +72,25 @@ Future<void> _waitFor(WidgetTester tester, Finder finder) async {
 }
 
 Future<void> _scrollToAndTap(WidgetTester tester, Finder target) async {
-  if (target.evaluate().isEmpty) {
-    await tester.scrollUntilVisible(
-      target,
-      250,
-      scrollable: find.byType(Scrollable).first,
+  for (var attempt = 0; attempt < 20 && target.evaluate().isEmpty; attempt++) {
+    final scrollables = find.byType(Scrollable);
+    if (scrollables.evaluate().isEmpty) {
+      await tester.pump(const Duration(milliseconds: 100));
+      continue;
+    }
+    await tester.drag(
+      scrollables.last,
+      const Offset(0, -250),
+      warnIfMissed: false,
     );
-  } else {
-    await tester.ensureVisible(target.first);
+    await tester.pump(const Duration(milliseconds: 150));
   }
+  expect(target, findsWidgets);
+  await tester.ensureVisible(target.first);
   await tester.pump(const Duration(milliseconds: 200));
   final inkWell = find.ancestor(of: target, matching: find.byType(InkWell));
-  await tester.tap(inkWell.evaluate().isEmpty ? target.first : inkWell.first);
+  await tester.tap(
+    inkWell.evaluate().isEmpty ? target.first : inkWell.first,
+    warnIfMissed: false,
+  );
 }

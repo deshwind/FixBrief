@@ -78,6 +78,7 @@ abstract final class LiquidGlassTheme {
       ),
       snackBarTheme: SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
+        insetPadding: const EdgeInsets.fromLTRB(16, 8, 16, 112),
         backgroundColor: brightness == Brightness.dark
             ? const Color(0xFF18324B)
             : LiquidGlassColors.deepNavy,

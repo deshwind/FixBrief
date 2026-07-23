@@ -60,3 +60,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  assets:
+    - assets/branding/fixbrief_logo.png

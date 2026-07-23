@@ -1,4 +1,4 @@
-import 'package:fixbrief/core/theme/liquid_glass_colors.dart';
+import 'package:fixbrief/core/widgets/fixbrief_logo.dart';
 import 'package:fixbrief/core/widgets/liquid_glass/fluid_background.dart';
 import 'package:flutter/material.dart';
 
@@ -16,24 +16,7 @@ class SplashScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  width: 86,
-                  height: 86,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(29),
-                    gradient: const LinearGradient(
-                      colors: [
-                        LiquidGlassColors.coolBlue,
-                        LiquidGlassColors.cyan,
-                      ],
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.link_rounded,
-                    color: Colors.white,
-                    size: 42,
-                  ),
-                ),
+                const FixBriefLogo(size: 96, semanticLabel: 'FixBrief'),
                 const SizedBox(height: 22),
                 Text(
                   'FixBrief',

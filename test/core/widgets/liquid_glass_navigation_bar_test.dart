@@ -41,4 +41,54 @@ void main() {
 
     expect(selectedIndex, 1);
   });
+
+  testWidgets('floating snackbars do not block navigation destinations', (
+    tester,
+  ) async {
+    var selectedIndex = 0;
+    final scaffoldKey = GlobalKey<ScaffoldState>();
+
+    await tester.pumpWidget(
+      ProviderScope(
+        child: MaterialApp(
+          theme: LiquidGlassTheme.light,
+          home: Scaffold(
+            key: scaffoldKey,
+            body: Stack(
+              children: [
+                const SizedBox.expand(),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: LiquidGlassNavigationBar(
+                    selectedIndex: selectedIndex,
+                    onDestinationSelected: (index) => selectedIndex = index,
+                    destinations: const [
+                      LiquidGlassNavigationDestination(
+                        icon: Icons.home_outlined,
+                        label: 'Home',
+                      ),
+                      LiquidGlassNavigationDestination(
+                        icon: Icons.chat_bubble_outline,
+                        label: 'Messages',
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+
+    ScaffoldMessenger.of(
+      scaffoldKey.currentContext!,
+    ).showSnackBar(const SnackBar(content: Text('Saved successfully')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
+
+    expect(find.text('Saved successfully'), findsOneWidget);
+    await tester.tap(find.text('Messages'));
+    expect(selectedIndex, 1);
+  });
 }
